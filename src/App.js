@@ -9,7 +9,7 @@ class App extends Component {
     state = { loggedIn : null};
     componentWillMount() {
         firebase.initializeApp({
-            apiKey: 'AIzaSyAjaHttv4PXDYaUkJEC8LrQU4M3eXY9hds',
+            apiKey: '',
             authDomain: 'authrn-858b8.firebaseapp.com',
             databaseURL: 'https://authrn-858b8.firebaseio.com',
             projectId: 'authrn-858b8',
