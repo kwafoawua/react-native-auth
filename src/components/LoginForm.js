@@ -11,14 +11,13 @@ class LoginForm extends Component {
         const { email, password } = this.state;
         this.setState({error:'', loading: true});
         firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(() => {
-
-            })
+            .then(
+                //no sabemos el contexto en el cual va a ser llamado por eso usamos el bind
+                this.onLoginSuccess.bind(this))
             .catch(() => {
                 firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .catch(() => {
-                        this.setState({error: 'Fallo la Autenticacion'});
-                    });
+                    .then(this.onLoginSuccess.bind(this))
+                    .catch(this.onLoginFail.bind(this));
             });
     }
 
@@ -31,7 +30,15 @@ class LoginForm extends Component {
         })
     }
 
+    onLoginFail() {
+        this.setState({
+            error: 'Fallo la Autenticacion',
+            loading: false
+        });
+    }
+
     renderButton () {
+        //component lvl state
         if( this.state.loading) {
             return <Spinner size="small"/>;
         }else {
